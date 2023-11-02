@@ -1,0 +1,43 @@
+{% extends 'recipes/base.html' %}
+<style>
+    body {
+        background-color: #fff7e1;
+    }
+</style>
+{% block content %}
+    <div class="container mt-4">
+        <h2>Conversions</h2>
+        <form action="{% url 'Recipes:conversions' %}" method="get">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="ingredient">Ingredient</label>
+                <input type="text" class="form-control" id="ingredient" name="ingredientName">
+            </div>
+            <div class="form-group">
+                <label for="sourceAmount">Source Amount</label>
+                <input type="number" class="form-control" id="sourceAmount" name="sourceAmount">
+            </div>
+            <div class="form-group">
+                <label for="sourceUnit">Source Unit</label>
+                <input type="text" class="form-control" id="sourceUnit" name="sourceUnit">
+            </div>
+            <div class="form-group">
+                <label for="targetUnit">Target Unit</label>
+                <input type="text" class="form-control" id="targetUnit" name="targetUnit">
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Convert</button>
+        </form>
+
+        {% if conversions %}
+            <div class="alert alert-success mt-4" role="alert">
+                {{ conversions.answer }}
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="alert alert-danger mt-4" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

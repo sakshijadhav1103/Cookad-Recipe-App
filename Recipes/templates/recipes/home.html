@@ -1,0 +1,44 @@
+{% extends 'recipes/base.html' %}
+{% load static %}
+<style>
+    .custom-btn-conversions {
+        background-color: #ee7d08; /* Set your desired color for conversions button */
+    }
+
+    .custom-btn-substitutes {
+        background-color: #ee7d08; /* Set your desired color for substitutes button */
+    }
+</style>
+{% block content %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Conversions</h5>
+                            <p class="card-text">Measurement conventions can be confusing, we got you covered</p>
+                            <form action="{% url 'Recipes:conversions' %}" method="get">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary custom-btn-conversions">Search</button>
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Substitutes</h5>
+                            <p class="card-text">Don't have an ingredient at hand? Look for ingredient substitutions</p>
+                            <form action="{% url 'Recipes:substitutes' %}" method="get">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary custom-btn-substitutes">Search</button>
+                            </form>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

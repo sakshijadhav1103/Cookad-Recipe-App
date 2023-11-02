@@ -1,0 +1,32 @@
+{% extends 'recipes/base.html' %}
+
+<style>
+    body {
+        background-color: #fff7e1;
+    }
+</style>
+
+{% block content %}
+    <h1>Substitutes</h1>
+
+    <form action="{% url 'Recipes:substitutes' %}" method="get">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="substitutes-cat">Ingredient</label>
+            <input type="text" class="form-control" id="substitutes-cat" name="ingredient">
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+    
+    {% if substitutes %}
+        <div class="alert alert-success mt-4" role="alert">
+            Found substitutes for {{ ingredient }}:
+            <ul>
+                {% for substitute in substitutes %}
+                    <li>{{ substitute }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    
+{% endblock %}

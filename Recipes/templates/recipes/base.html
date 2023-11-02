@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+        <title>{{title}}</title>
+    {%else%}
+        <title>Recipe App</title>
+    {%endif%}
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+      .navbar {
+    background-color: #f34d55 !important;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+@font-face {
+    font-family: 'Young Serif';
+    src: url(/static/fonts/YoungSerif-Regular.ttf) format('truetype');
+}
+
+body {
+        background-color: #fff7e1 ; /* Set your desired background color here */
+    }
+.navbar-brand {
+    color: #552114; 
+    font-family: 'Young Serif', serif;
+    font-size: 40px;
+}
+
+.navbar-nav {
+    margin: 0 auto;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+}
+
+.form-control {
+    width: 300px;
+}
+
+.container {
+    max-width: none;
+    padding: 20px;
+}
+
+.bg-image {
+    background-image: url("{% static 'images/IMAP_bg.png' %}");
+    background-size: 100% 100%;
+    background-position: center center;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.dropdown-bar {
+    background-color: #ee7d08;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 0;
+}
+
+.dropdown-bar .dropdown-item {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.dropdown-bar .dropdown-item a {
+    text-decoration: none;
+    color: #212529;
+    font-weight: bold;
+}
+
+.button-container {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+}
+
+.button-container button {
+    margin-bottom: 10px;
+}
+
+.btn-outline-success:hover {
+    background-color: #ee7d08 ;
+    border-color: #ee7d08 ;
+    color: #fff;
+}
+
+    </style>
+  </head>
+
+<body>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add an event listener to the dropdown items
+        document.querySelectorAll('.dropdown-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                // Get the name of the dropdown (diet, intolerance, cuisine)
+                var dropdownName = this.getAttribute('name');
+                // Get the text of the selected item
+                var selectedItem = this.innerText;
+                // Set the search input value to the selected item
+                document.querySelector('input[name="query"]').value = selectedItem;
+                // Set the category value to the corresponding dropdown name
+                document.querySelector('select[name="cat"]').value = dropdownName;
+            });
+        });
+    });
+</script>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'Recipes:home'%}">Cookad Kamalda</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:register' %}">Register</a>
+                    </li>
+            </ul>
+            <form id="searchForm" class="d-flex mx-auto" action="{% url 'Recipes:results' %}" method='get' role="search">
+              {% csrf_token %}
+              <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
+
+              <select name="cat" id="cat" class="form-control me-2">
+                  <option selected value="">Select a category</option>
+                  <option value="recipes">Recipes</option>
+                  <option value="ingredients">Ingredients</option>
+                  <option value="menuItems">Menu Items</option>
+                  <option value="products">Products</option>
+              </select>
+            
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>  
+          </div>
+        </div>
+      </nav>
+
+      <div class="dropdown-bar">
+        <div class="dropdown">
+            <div class="dropdown-toggle" data-bs-toggle="dropdown">
+                Diet
+            </div>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#" name="query" value="Gluten Free">Gluten Free</a>
+              <a class="dropdown-item" href="#" name="query" value="Gluten Free">Ketogenic</a>
+              <a class="dropdown-item" href="#"name="query" value="Gluten Free">Vegetarian</a>
+              <a class="dropdown-item" href="#"name="query" value="Gluten Free">Lacto-Vegetarian</a>
+              <a class="dropdown-item" href="#"name="query" value="Gluten Free">Ovo-Vegetarian</a>
+              <a class="dropdown-item" href="#"name="query" value="Gluten Free">Vegan</a>
+              <a class="dropdown-item" href="#"name="query" value="Gluten Free">Pescetarian</a>
+              <a class="dropdown-item" href="#"name="query" value="Gluten Free">Paleo</a>
+              <a class="dropdown-item" href="#"name="query" value="Gluten Free">Primal</a>
+              <a class="dropdown-item" href="#"name="query" value="Gluten Free">Low FODMAP</a>
+              <a class="dropdown-item" href="#"name="query" value="Gluten Free">Whole30</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <div class="dropdown-toggle" data-bs-toggle="dropdown">
+                Intolerance
+            </div>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#"name="intolerance">Dairy</a>
+              <a class="dropdown-item" href="#"name="intolerance">Egg</a>
+              <a class="dropdown-item" href="#"name="intolerance">Gluten</a>
+              <a class="dropdown-item" href="#"name="intolerance">Grain</a>
+              <a class="dropdown-item" href="#"name="intolerance">Peanut</a>
+              <a class="dropdown-item" href="#"name="intolerance">Seafood</a>
+              <a class="dropdown-item" href="#"name="intolerance">Sesame</a>
+              <a class="dropdown-item" href="#"name="intolerance">Shellfish</a>
+              <a class="dropdown-item" href="#"name="intolerance">Soy</a>
+              <a class="dropdown-item" href="#"name="intolerance">Sulfite</a>
+              <a class="dropdown-item" href="#"name="intolerance">Tree Nut</a>
+              <a class="dropdown-item" href="#"name="intolerance">Wheat</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <div class="dropdown-toggle" data-bs-toggle="dropdown">
+                Cuisine
+            </div>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#"name="cuisine">African</a>
+              <a class="dropdown-item" href="#"name="cuisine">Asian</a>
+              <a class="dropdown-item" href="#"name="cuisine">American</a>
+              <a class="dropdown-item" href="#"name="cuisine">British</a>
+              <a class="dropdown-item" href="#"name="cuisine">Cajun</a>
+              <a class="dropdown-item" href="#"name="cuisine">Caribbean</a>
+              <a class="dropdown-item" href="#"name="cuisine">Chinese</a>
+              <a class="dropdown-item" href="#"name="cuisine">Eastern European</a>
+              <a class="dropdown-item" href="#"name="cuisine">European</a>
+              <a class="dropdown-item" href="#"name="cuisine">French</a>
+              <a class="dropdown-item" href="#"name="cuisine">German</a>
+              <a class="dropdown-item" href="#"name="cuisine">Greek</a>
+              <a class="dropdown-item" href="#"name="cuisine">Indian</a>
+              <a class="dropdown-item" href="#"name="cuisine">Irish</a>
+              <a class="dropdown-item" href="#"name="cuisine">Italian</a>
+              <a class="dropdown-item" href="#"name="cuisine">Japanese</a>
+              <a class="dropdown-item" href="#"name="cuisine">Jewish</a>
+              <a class="dropdown-item" href="#"name="cuisine">Korean</a>
+              <a class="dropdown-item" href="#"name="cuisine">Latin American</a>
+              <a class="dropdown-item" href="#"name="cuisine">Mediterranean</a>
+              <a class="dropdown-item" href="#"name="cuisine">Mexican</a>
+              <a class="dropdown-item" href="#"name="cuisine">Middle Eastern</a>
+              <a class="dropdown-item" href="#"name="cuisine">Nordic</a>
+              <a class="dropdown-item" href="#"name="cuisine">Southern</a>
+              <a class="dropdown-item" href="#"name="cuisine">Spanish</a>
+              <a class="dropdown-item" href="#"name="cuisine">Thai</a>
+              <a class="dropdown-item" href="#"name="cuisine">Vietnamese</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        {% if messages %}
+            {% for  message in messages %}
+              <div class="'alert alert-{{message.tags}}">{{message}}</div>
+            {% endfor %}
+        {% endif %}
+        {% block content %} {% endblock content %}</div>
+
+    <div class="test"></div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+</body>
+</html>

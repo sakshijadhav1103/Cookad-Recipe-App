@@ -1,0 +1,20 @@
+{% extends 'recipes/base.html' %}
+
+{% block content %}
+    <h1>{{ information.title }}</h1>
+
+    <h2>Ingredients:</h2>
+<ul>
+    {% for ingredient in ingredients %}
+        <li>{{ ingredient.original }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Instructions:</h2>
+<ol>
+    {% for step in instructions %}
+        <li>{{ step.step }}</li>
+    {% endfor %}
+</ol>
+
+{% endblock %}

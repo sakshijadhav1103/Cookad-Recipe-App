@@ -1,0 +1,47 @@
+{% extends 'recipes/base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background-color: #fff7e1 ; /* Set your desired background color here */
+    }
+</style>
+<h3 id="map"></h3>
+
+<div class="container">
+
+    <h4>Results for:</h4>
+    <h3>Category: <em style="color: #552114"><b>"{{cat}}"</b></em></h3>
+    <h3>Query: <em style="color: #552114"><b>"{{query}}"</b></em></h3>
+
+    <div class="row">
+        {% for item in results %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    {% if item.image %}
+                        <img src="{{ item.image }}" class="card-img-top" alt="{{ item.name }}">
+                    {% else %}
+                        <div class="text-center" style="height: 200px; background-color: #ccc;">
+                            No image available
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'Recipes:recipe_detail' item.id %}">
+                                {% if item.name %}
+                                    {{ item.name }}
+                                {% else %}
+                                    {{ item.title }}
+                                {% endif %}
+                            </a>
+                        </h5>
+                        <p class="card-text">ID: {{ item.id }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}
